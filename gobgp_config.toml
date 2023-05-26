@@ -1,0 +1,37 @@
+#https://github.com/osrg/gobgp/blob/master/docs/sources/getting-started.md
+
+[global.config]
+  as = 65101
+  router-id = "192.168.1.2"
+
+[[neighbors]]
+  [neighbors.config]
+    neighbor-address = "192.168.1.1"
+    peer-as = 65100
+    [[neighbors.afi-safis]]
+      [neighbors.afi-safis.config]
+      afi-safi-name = "ipv4-unicast"
+
+[[neighbors]]
+  [neighbors.config]
+    neighbor-address = "192:168:1::1"
+    peer-as = 65100
+    [[neighbors.afi-safis]]
+      [neighbors.afi-safis.config]
+      afi-safi-name = "ipv6-unicast"
+
+[[neighbors]]
+  [neighbors.config]
+    neighbor-address = "192.168.2.1"
+    peer-as = 65100
+    [[neighbors.afi-safis]]
+      [neighbors.afi-safis.config]
+      afi-safi-name = "ipv4-unicast"
+
+[[neighbors]]
+  [neighbors.config]
+    neighbor-address = "192:168:2::1"
+    peer-as = 65100
+    [[neighbors.afi-safis]]
+      [neighbors.afi-safis.config]
+      afi-safi-name = "ipv6-unicast"

@@ -1,0 +1,21 @@
+name: gobgp-container
+
+topology:
+  nodes:
+    srl1:
+      kind: srl
+      image: ghcr.io/nokia/srlinux
+      startup-config: startup-configs/srl-startup.cfg
+    ceos1:
+      kind: ceos
+      image: ceos64-lab:4.29.2F
+      startup-config: startup-configs/ceos-startup.cfg
+    gobgp:
+      kind: linux
+      image: gobgp_inet_container:latest
+      binds:
+        - ./startup-configs/gobgp.sh:/root/gobgp/iplinks.sh
+
+  links:
+    - endpoints: ["srl1:e1-1", "gobgp:eth1"]
+    - endpoints: ["ceos1:eth1", "gobgp:eth2"]
