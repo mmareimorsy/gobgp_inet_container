@@ -2,7 +2,7 @@
 
 This is a container that packages [GoBGP](https://github.com/osrg/gobgp/tree/master) together with [pfx_parser](https://github.com/mmareimorsy/pfx_parser) & [gobgp_inet_updater](https://github.com/mmareimorsy/gobgp_inet_updater), combined together this works as a way to have a BGP client with an internet routing table RIB for IPv4 & IPv6 that can be sent to networking devices under test.
 
-The image can be used through docker
+The image can be used through [docker hub](https://hub.docker.com/r/mmareimorsy85/gobgp_inet_container)
 
 ## Example
 
