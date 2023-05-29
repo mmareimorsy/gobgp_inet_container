@@ -39,6 +39,40 @@ Then you can use gobgp_client.py to send prefixes
 root@gobgp:~/gobgp# gobgp_client.py --json_rib ipv4_rib.json --num_prefixes 100
 INFO :: 05/26/2023 06:43:10 AM :: Processing rib file ipv4_rib.json
 INFO :: 05/26/2023 06:43:10 AM :: Sent 100 prefixes out of a total of 100 expected prefixes
+
+root@gobgp:~/gobgp# gobgp_client.py --json_rib ipv6_rib.json --num_prefixes 100
+INFO :: 05/29/2023 09:13:12 PM :: Processing rib file ipv6_rib.json
+INFO :: 05/29/2023 09:13:12 PM :: Sent 100 prefixes out of a total of 100 expected prefixes
 ```
 
+From the devices connected in the topology you can see the RIB getting updated as prefixes get sent from GoBGP client 
+
+```
+ceos1#show bgp summary
+BGP summary information for VRF default
+Router identifier 192.168.2.1, local AS number 65100
+Neighbor              AS Session State AFI/SAFI                AFI/SAFI State   NLRI Rcd   NLRI Acc  
+------------ ----------- ------------- ----------------------- -------------- ---------- ----------  
+192.168.2.2        65101 Established   IPv4 Unicast            Negotiated            100        100  
+192:168:2::2       65101 Established   IPv6 Unicast            Negotiated            100        100
+```
+
+```
+A:srl1# show network-instance default protocols bgp neighbor
+-----------------------------------------------------------------------------------------------------BGP neighbor summary for network-instance "default"
+Flags: S static, D dynamic, L discovered by LLDP, B BFD enabled, - disabled, * slow
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------+----------+----------+----------+----------+----------+----------+----------+----------+ 
+| Net-Inst |   Peer   |  Group   |  Flags   | Peer-AS  |  State   |  Uptime  | AFI/SAFI | [Rx/Acti | 
+|          |          |          |          |          |          |          |          |  ve/Tx]  | 
++==========+==========+==========+==========+==========+==========+==========+==========+==========+ 
+| default  | 192.168. | GOBGP    | S        | 65101    | establis | 3d:14h:3 | ipv4-uni | [100/100 | 
+|          | 1.2      |          |          |          | hed      | 1m:41s   | cast     | /0]      | 
+| default  | 192:168: | GOBGPv6  | S        | 65101    | establis | 3d:14h:3 | ipv6-uni | [100/100 |
+|          | 1::2     |          |          |          | hed      | 1m:42s   | cast     | /0]      | 
++----------+----------+----------+----------+----------+----------+----------+----------+----------+ 
+-----------------------------------------------------------------------------------------------------Summary:
+2 configured neighbors, 2 configured sessions are established,0 disabled peers
+0 dynamic peers
+--{ running }--[  ]--
+```
 The image includes ipv4_rib.json & ipv6_rib.json which are internet routing table copies from April 2023, you can use pfx_parser.py to update the rib with a new copy as needed.
